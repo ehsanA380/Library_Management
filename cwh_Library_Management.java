@@ -1,0 +1,263 @@
+// package com.company;
+
+import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.logging.Level;
+
+class LibraryManagement{
+    // to add book in library;
+    void addBook(String BookName,String Author, ArrayList<String> Book,ArrayList<String> BookAuthor ){
+        Book.add(BookName);
+        BookAuthor.add(Author);
+    }
+    // code for issuing books;
+    public  int issueBook(String StdName,String BookName,String AuthorName,ArrayList<String> Book,ArrayList<String> IssuedBook,ArrayList<String> Author ,ArrayList<String> IssuedBookAuthor,ArrayList<String> ToIssued){
+
+        if(Book.contains(BookName)){
+            for(int i=0;i<Book.size();i++){
+                if(Book.get(i).equals(BookName)&&Author.get(i).equals(AuthorName)){
+                    IssuedBook.add(BookName);
+                    Book.remove(i);
+                    IssuedBookAuthor.add(AuthorName);
+                    Author.remove(i);
+                    ToIssued.add(StdName);
+                    System.out.println("Congratulation! Your Book has been issued now.");
+                    return 1;
+                }
+
+            }
+        }
+        else{
+            if(IssuedBook.contains(BookName)){
+                for (int i =0;i<IssuedBook.size();i++){
+                    if(IssuedBook.get(i).equals(BookName)&&IssuedBookAuthor.get(i).equals(AuthorName)){
+                        System.out.println("Sorry! "+ StdName+ " This Book is already issued by "+ToIssued.get(i));
+                        return -2;
+                    }
+                }
+            }
+            else {
+
+            System.out.println("not Available");
+            }
+        }
+        return -1;
+    }
+
+    // code for return books;
+    int returnBook(String StdName,String BookName,String AuthorName,ArrayList<String> Book,ArrayList<String> IssuedBook,ArrayList<String> Author ,ArrayList<String> IssuedBookAuthor,ArrayList<String> ToIssued){
+        if (ToIssued.contains(StdName)&&IssuedBook.contains(BookName)) {
+
+            for (int i=0;i<IssuedBook.size();i++){
+
+                if(IssuedBook.get(i).equals(BookName)&&IssuedBookAuthor.get(i).equals(AuthorName)&&ToIssued.get(i).equals(StdName)){
+                    IssuedBook.remove(BookName);
+                    IssuedBookAuthor.remove(AuthorName);
+                    ToIssued.remove(StdName);
+                    Book.add(BookName);
+                    Author.add(AuthorName);
+                    System.out.println("Your book has been returned Successfully.");
+                    return 1;
+                }
+
+            }
+        }
+        else {
+            System.out.println("You Have not issued this Book!");
+        }
+        return -1;
+    }
+}
+
+public class cwh_Library_Management {
+    public static void main(String[] args) {
+        Scanner sc =new Scanner(System.in);
+        LibraryManagement l = new LibraryManagement();
+        ArrayList<String> Book = new ArrayList<>();
+        ArrayList<String> BookIssued = new ArrayList<>();
+        ArrayList<String> ToIssued =new ArrayList<>();
+        ArrayList<String> IssuedBookAuthor = new ArrayList<>();
+        ArrayList<String> Author = new ArrayList<>();
+        ArrayList<String> Student= new ArrayList<>();
+//        l.addBook("Javascript","Harry",Book,Author);
+        // athor of the books in library
+        Author.add("Rk bali");
+        Author.add("William");
+        Author.add("William");
+        Author.add("Albert");
+        Author.add("Walton");
+
+        // Avilable books with correspondence author available in the library
+        Book.add("C++");
+        Book.add("C#");
+        Book.add("C and algorithm");
+        Book.add("Java");
+        Book.add("Python");
+        // Registered Student name in library Who are able to issue the books .
+        Student.add("Ehsan");
+        Student.add("Mitrasen");
+        Student.add("Satyam");
+        Student.add("Arman");
+        Student.add("Aman");
+
+//        System.out.println(Student);
+            // bugs handling Operation
+//        String name,book,authorr;
+//        System.out.println("Enter your name");
+//        name=sc.next();
+//        System.out.println("Enter book name");
+//        book=sc.next();
+//        System.out.println("Enter author name");
+//        authorr=sc.next();
+
+//        //-----------------------------
+//        System.out.println(l.issueBook("Ehsan","Javascript","Harry",Book,BookIssued,Author,IssuedBookAuthor,ToIssued));
+//        System.out.println(l.issueBook(name,book,authorr,Book,BookIssued,Author,IssuedBookAuthor,ToIssued));
+//        System.out.println(l.returnBook("Ehsdan","Javascript","Harry",Book,BookIssued,Author,IssuedBookAuthor,ToIssued));
+
+//        System.out.println(l.returnBook("Ehsan","Javascript","Harry",Book,BookIssued,Author,IssuedBookAuthor,ToIssued));
+        // printing all available books in the library
+//        System.out.println("Available Books :"+Book);
+//        // prinnting all available book's authors name
+//        System.out.println("Available Books Author: "+Author);
+//        // all student name who have issued book in the library
+//        System.out.println("Books have been issued To:"+ToIssued);
+//        // printing all issued books name
+//        System.out.println("Books have got issued: "+BookIssued);
+//        // printing all issued Book's authors names
+//        System.out.println("Books have got issued to "+IssuedBookAuthor);
+//        // printing all the books with their outhors name
+//        System.out.println("\nAll avilable books in the library:-");
+//        for (int i= 0; i< Book.size();i++){
+//            System.out.println("The name of the Book is "+Book.get(i)+ " and the author name is "+ Author.get(i));
+//        }
+//            System.out.println("\n ");
+//        // printing all the books which have been issued to the particular student
+//        for (int i= 0; i< BookIssued.size();i++){
+//            System.out.format("Book: %s which Author: %s  has been issued by %s\n",BookIssued.get(i),IssuedBookAuthor.get(i),ToIssued.get(i));
+//        }
+        int ch=-1;
+        System.out.format("---****Welcome to our Library****---\n");
+        while (true) {
+            System.out.format("Enter Choice: \n");
+            System.out.format("1.To Add Books\n2.To Issue Books\n3.Return Issued Books\n4.Show Available Books\n5.Show Issued Books\n6.Show Registered Student Name\n7.Register your name\n0.To Exit\n");
+
+                while(ch==-1){
+                    try{
+
+                        ch=sc.nextInt();
+
+                    }
+                    catch (Exception e){
+                        System.out.println("please enter a digit");
+                        sc.nextLine();// for handling to keyboard buffer
+                    }
+                    if(ch!=-1){
+                        break;
+                    }
+
+                }
+
+
+            String StdName,BookName,AuthorName;
+                switch (ch) {
+                    case 1:
+                        System.out.println("Enter Your Name");
+                        sc.nextLine();// for handling to keyboard buffer
+                        StdName = sc.nextLine();
+                        System.out.println("Enter the BookName");
+                        BookName = sc.nextLine();
+                        System.out.println("Enter the AuthorName");
+                        AuthorName = sc.nextLine();
+                        if (Student.contains(StdName)) {
+                            l.addBook(BookName, AuthorName, Book, Author);
+                            System.out.println("Thanks for your Contribution");
+                        } else {
+                            System.out.println("your name is not registered in our library please Register first");
+                        }
+                        break;
+
+                    case 2:
+                        System.out.println("Enter Your Name");
+                        sc.nextLine();// for handling to keyboard buffer
+                        StdName = sc.nextLine();
+                        System.out.println("Enter the BookName");
+                        BookName = sc.nextLine();
+                        System.out.println("Enter the AuthorName");
+                        AuthorName = sc.nextLine();
+
+                        if (Student.contains(StdName)) {
+                            l.issueBook(StdName, BookName, AuthorName, Book, BookIssued, Author, IssuedBookAuthor, ToIssued);
+                        } else {
+                            System.out.println("your name is not registered in our library please Register first");
+                        }
+                        break;
+
+                    case 3:
+                        System.out.println("Enter Your Name");
+                        sc.nextLine();// for handling to keyboard buffer
+                        StdName = sc.nextLine();
+                        System.out.println("Enter the BookName");
+                        BookName = sc.nextLine();
+                        System.out.println("Enter the AuthorName");
+                        AuthorName = sc.nextLine();
+
+                        if (ToIssued.contains(StdName) && BookIssued.contains(BookName)) {
+                            l.returnBook(StdName, BookName, AuthorName, Book, BookIssued, Author, IssuedBookAuthor, ToIssued);
+
+
+//                            System.out.format(" Congratulation %s! your book has been returned successfully", StdName);
+                        } else if (!(ToIssued.contains(StdName))) {
+                            System.out.println("You have not issued any book .");
+                        } else {
+                            System.out.println("Sorry We can not Accept it Because it has not been issued yet");
+                        }
+                        break;
+
+                    case 4:
+                        System.out.println("All avilable books in the library:-");
+                        for (int i= 0; i< Book.size();i++){
+                            System.out.println("The name of the Book is "+Book.get(i)+ " and the author name is "+ Author.get(i));
+                        }
+                        if(Book.isEmpty()){
+                            System.out.println("empty!");
+                        }
+                        break;
+
+                    case 5:
+                        System.out.println("All issued Books :-");
+                        for (int i= 0; i< BookIssued.size();i++){
+                            System.out.format("Book: %s which Author: %s  has been issued by %s\n",BookIssued.get(i),IssuedBookAuthor.get(i),ToIssued.get(i));
+                        }
+                        break;
+
+                    case 6:
+                        System.out.println(Student);
+                        break;
+
+                    case 7:
+                        sc.nextLine();// for handling to keyboard buffer
+                        System.out.println("Enter Your Good Name");
+                        String name=sc.nextLine();
+                        if(Student.contains(name)){
+                            System.out.println("this is already Registered!");
+                        }
+                        else {
+                            Student.add(name);
+                            System.out.println("Congratulation! %s your name has been registered successfully.");
+                        }
+                        break;
+                    case 0:
+                        System.out.println("Bye Bye!");
+                        System.exit(0);
+                        break;
+
+                    default:
+                        System.out.println("Please enter between 0 to 7!");
+                }
+                ch=-1;// for sending again it to try catch block loop
+        }
+
+    }
+}
